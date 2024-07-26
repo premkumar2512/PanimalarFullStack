@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome Page</title>
+<style>
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f4f4f4;
+	margin: 0;
+	padding: 20px;
+}
+
+.container {
+	max-width: 600px;
+	margin: 0 auto;
+	padding: 20px;
+	background-color: #fff;
+	border-radius: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	text-align: center;
+}
+
+h1 {
+	color: rgb(28, 77, 0);
+}
+
+p {
+	font-size: 18px;
+}
+</style>
+</head>
+<body>
+	<div class="container">
+		<h1 id="welcomeMessage">Welcome, [FirstName]!</h1>
+		<p id="aboutMe">[AboutMe]</p>
+	</div>
+	<script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Retrieve user data from session storage or make an API call
+            const user = JSON.parse(sessionStorage.getItem('user'));
+
+            if (user) {
+                // Display the user's first name and about me details
+                document.getElementById('welcomeMessage').textContent = `Welcome, ${user.firstname}!`;
+                
+                // Process and display the "About Me" content
+                const aboutMeElement = document.getElementById('aboutMe');
+                const aboutContent = user.about.split('\n').filter(p => p.trim() !== '');
+
+                aboutContent.forEach(paragraph => {
+                    const paragraphElement = document.createElement('p');
+                    paragraphElement.textContent = paragraph;
+                    aboutMeElement.appendChild(paragraphElement);
+                });
+    
+            } else {
+                // Handle the case where the user data is not available
+                document.getElementById('welcomeMessage').textContent = "Welcome!";
+                document.getElementById('aboutMe').textContent = "No details available.";
+            }
+        });
+    </script>
+</body>
+</html>
